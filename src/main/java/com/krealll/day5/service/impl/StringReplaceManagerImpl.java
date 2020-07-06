@@ -1,9 +1,15 @@
 package com.krealll.day5.service.impl;
 
+import com.krealll.day5.exception.CustomException;
 import com.krealll.day5.service.ReplaceManager;
+import com.krealll.day5.service.StringManager;
 
-public class StringReplaceManagerImpl implements ReplaceManager {
-    public String replaceSymbolInWord(String inputString, int symbolNumber, char replaceSymbol) {
+public class StringReplaceManagerImpl extends StringManager implements ReplaceManager {
+
+    public String replaceSymbolInWord(String inputString, int symbolNumber, char replaceSymbol) throws CustomException {
+        if(inputString==null||symbolNumber<0){
+            throw new CustomException(BAD_PARAMETERS_MESSAGE);
+        }
         StringBuilder resultString = new StringBuilder(inputString);
         int sizeCounter = 0;
         for (int i = 0; i <resultString.length() ; i++) {
@@ -22,12 +28,17 @@ public class StringReplaceManagerImpl implements ReplaceManager {
         return resultString.toString();
     }
 
-    public String correctMistake(String inputString, String wrongElement, String correctElement) {
-        //TODO: add String implementation
-        return "";
+    public String correctMistake(String inputString, String wrongElement, String correctElement) throws CustomException {
+        if(inputString==null|| wrongElement==null||correctElement==null){
+            throw new CustomException("Wrong method parameters");
+        }
+        return inputString.replace(wrongElement,correctElement);
     }
 
-    public String replaceWordBySubStr(String inputString, String subString, int baseWordSize) {
+    public String replaceWordBySubStr(String inputString, String subString, int baseWordSize) throws CustomException {
+        if(inputString==null||subString==null||baseWordSize<1){
+            throw new CustomException(BAD_PARAMETERS_MESSAGE);
+        }
         StringBuilder resultString = new StringBuilder(inputString);
         int sizeCounter = 0, endOfReplacement, subStrLength = subString.length();
         for (int i = 0; i <resultString.length() ; i++) {
@@ -51,14 +62,8 @@ public class StringReplaceManagerImpl implements ReplaceManager {
                     i+=subStrLength-sizeCounter;
                 }
             }
-
             sizeCounter=0;
         }
         return resultString.toString();
-    }
-
-    private boolean isLetter(char c){
-        //TODO: create super class that contains repeating private methods
-        return (c>=65&&c<=90)||(c>=97&&c<=122);
     }
 }

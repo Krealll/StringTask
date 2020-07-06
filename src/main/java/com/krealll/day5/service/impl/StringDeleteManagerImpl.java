@@ -1,14 +1,15 @@
 package com.krealll.day5.service.impl;
 
+import com.krealll.day5.exception.CustomException;
 import com.krealll.day5.service.DeleteManager;
+import com.krealll.day5.service.StringManager;
 
-import java.util.Arrays;
+public class StringDeleteManagerImpl extends StringManager implements DeleteManager{
 
-public class StringDeleteManagerImpl implements DeleteManager {
-
-    private static final String VOWEL_SYMBOL_STR = "aeyuioAEYUIO";
-
-    public String delSymbolsExceptLetters(String inputStr) {
+    public String deleteNonLetterSymbols(String inputStr) throws CustomException {
+        if(inputStr==null){
+            throw new CustomException(BAD_PARAMETERS_MESSAGE);
+        }
         StringBuilder resultString = new StringBuilder(inputStr);
         for (int i = 0; i < resultString.length();) {
             if(i==resultString.length()-1){
@@ -31,7 +32,10 @@ public class StringDeleteManagerImpl implements DeleteManager {
         return resultString.toString();
     }
 
-    public String delWordOfSize(int wordSize, String inputString) {
+    public String deleteWord(String inputString, int wordSize) throws CustomException {
+        if(inputString==null||wordSize<1){
+            throw new CustomException(BAD_PARAMETERS_MESSAGE);
+        }
         StringBuilder resultString = new StringBuilder(inputString);
         int sizeCounter = 0, inputStrSize = inputString.length();
         for (int i = 0; i <inputStrSize-1 ;) {
@@ -56,24 +60,5 @@ public class StringDeleteManagerImpl implements DeleteManager {
             }
         }
         return resultString.toString();
-
-    }
-
-    private boolean isLetter(char c){
-        return (c>=65&&c<=90)||(c>=97&&c<=122);
-    }
-
-    private boolean isSpace(char c){
-        return c==32;
-    }
-
-    private boolean isVowel (char c){
-        //TODO: create super class that contains repeating private methods
-        for (int i = 0; i <VOWEL_SYMBOL_STR.length() ; i++) {
-            if(c==VOWEL_SYMBOL_STR.charAt(i)){
-                return true;
-            }
-        }
-        return false;
     }
 }

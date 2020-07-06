@@ -1,9 +1,11 @@
 package com.krealll.day5.service;
 
+import com.krealll.day5.exception.CustomException;
+
 public interface DeleteManager {
 
-    String delSymbolsExceptLetters(String inputStr);
+    String deleteNonLetterSymbols(String inputStr) throws CustomException;
 
-    String delWordOfSize(int wordSize, String inputString);
+    String deleteWord(String inputString, int wordSize) throws CustomException;
 
 }
